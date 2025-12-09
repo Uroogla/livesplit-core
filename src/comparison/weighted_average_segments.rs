@@ -13,15 +13,15 @@ use crate::{Attempt, Segment, TimeSpan, TimingMethod};
 /// the Average Segments are more suited to represent the current performance
 /// of a runner.
 #[derive(Copy, Clone, Debug)]
-pub struct AverageSegments;
+pub struct WeightedAverageSegments;
 
 /// The short name of this comparison. Suitable for situations where not a lot
 /// of space for text is available.
-pub const SHORT_NAME: &str = "Average";
+pub const SHORT_NAME: &str = "Weighted Average";
 /// The name of this comparison.
-pub const NAME: &str = "Average Segments";
+pub const NAME: &str = "Weighted Average Segments";
 
-const WEIGHT: f64 = 1.0;
+const WEIGHT: f64 = 0.75;
 
 fn generate(segments: &mut [Segment], method: TimingMethod) {
     let mut accumulated = Some(TimeSpan::zero());
@@ -59,7 +59,7 @@ fn generate(segments: &mut [Segment], method: TimingMethod) {
     }
 }
 
-impl ComparisonGenerator for AverageSegments {
+impl ComparisonGenerator for WeightedAverageSegments {
     fn name(&self) -> &str {
         NAME
     }
